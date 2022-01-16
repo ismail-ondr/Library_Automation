@@ -1,0 +1,78 @@
+﻿@model Library_Automation.Models.Auth
+@{
+    ViewData["Title"] = "AuthTransactions";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+<head>
+    <script src="~/js/FormValidation.js"></script>
+</head>
+<div class="content-wrapper">
+
+    <div class="card card-danger">
+        <div class="card-header">
+            <h3 class="card-title">Yetkili Ekle</h3>
+        </div>
+
+        <form name="form">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Yetkili Id</label>
+                    <input type="text" class="form-control" name="AuthId" value=@Model.AuthId readonly>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Yetkili Adı</label>
+                    <input type="text" class="form-control" name="AuthName" value=@Model.AuthName required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Yetkili Eposta</label>
+                    <input type="text" class="form-control" name="AuthMail" value=@Model.AuthMail required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Yetkili Geçici Şifre</label>
+                    <input type="password" class="form-control" name="AuthPassword" value=@Model.AuthPassword required>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary" formaction="/Dashboard/AddAuth">Kaydet</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-body table-responsive p-0" style="height:400px;">
+                <table class="table table-hover-fixed text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Yetkili Id</th>
+                            <th>Yetkili Adı</th>
+                            <th>Eposta</th>
+                            <th>...</th>
+                            <th>...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.authList != null)
+                        {
+                            @foreach (var x in ViewBag.authList)
+                            {
+                                <tr>
+                                    <td>@x.AuthId</td>
+                                    <td>@x.AuthName</td>
+                                    <td>@x.AuthMail</td>
+                                    <td><a href="/Dashboard/RemoveAuth/@x.AuthId" class="btn btn-danger">Sil</a></td>
+                                    <td><a href="/Dashboard/UpdateAuth/@x.AuthId" class="btn btn-warning">Güncelle</a></td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,109 @@
+﻿@model Library_Automation.Models.User
+@{
+    ViewData["Title"] = "MemberTransactions";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+<head>
+    <script src="~/js/FormValidation.js"></script>
+</head>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">Yeni Üye Ekle</h3>
+                </div>
+                
+                <form name="form">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Üye Id</label>
+                            <input type="text" class="form-control" name="UserId" value="@Model.UserId" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Üye Adı</label>
+                            <input type="text" class="form-control" name="UserName" value="@Model.UserName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Eposta</label>
+                            <input type="text" class="form-control" name="UserMail" value="@Model.UserMail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Geçici Üye Şifresi</label>
+                            <input type="password" class="form-control" name="UserPassword" value="@Model.UserPassword" required>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success" formaction="/Dashboard/AddMember">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">Diğer Üye İşlemleri</h3>
+                </div>
+                <form>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Üye Ara</label>
+                            <input type="text" class="form-control" name="property" placeholder="Üye adı, Eposta">
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" formaction="/Dashboard/MemberTransactions">Ara</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    
+                    
+                    <div class="card-body table-responsive p-0" style="height:400px;">
+                        <table class="table table-hover-fixed text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Üye Id</th>
+                                    <th>Üye Adı</th>
+                                    <th>Eposta</th>
+                                    <th>Sil</th>
+                                    <th>Güncelle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.foundUsersList != null)
+                                {
+                                    @foreach (var x in ViewBag.foundUsersList)
+                                    {
+                                        <tr>
+                                            <td>@x.UserId</td>
+                                            <td>@x.UserName</td>
+                                            <td>@x.UserMail</td>
+                                            <td><a href="/Dashboard/RemoveMember/@x.UserId" class="btn btn-danger">Sil</a></td>
+                                            <td><a href="/Dashboard/UpdateMember/@x.UserId" class="btn btn-warning">Güncelle</a></td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+

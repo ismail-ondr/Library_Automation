@@ -1,0 +1,90 @@
+﻿@model Library_Automation.Models.User
+
+@{
+    Layout = null;
+
+}
+@*kullanıcı sayfası*@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/css/UserLogin.css" rel="stylesheet" />
+    <script src="~/js/PasswordValidation.js"></script>
+</head>
+<body>
+    <div class="login-wrap">
+        <div class="login-html">
+            @if (ViewBag.isSignup == true)
+            {
+                <input id="tab-1" type="radio" name="tab" class="sign-in"><label for="tab-1" class="tab">Giriş Yap</label>
+                <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Kayıt Ol</label>
+            }
+            else
+            {
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Giriş Yap</label>
+                <input id="tab-2" type="radio" name="tab" class="sign-up" ><label for="tab-2" class="tab">Kayıt Ol</label>
+            }
+
+
+            <div class="login-form">
+                <div class="sign-in-htm">
+                    <form method="post">
+                        <div class="group">
+                            <label for="user" class="label">Email</label>
+                            <input name="UserMail" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Password</label>
+                            <input name="UserPassword" type="password" class="input" data-type="password">
+                        </div>
+
+                        <div class="group">
+                            <input type="submit" name="submit" class="button" value="Sign In" formaction="/User/Index">
+                        </div>
+                    </form>
+
+
+                    <div class="hr"></div>
+                    <div class="foot-lnk">
+                        <a href="/Authorized/Index">Yetkili Girişi?</a>
+
+                    </div>
+
+                </div>
+                <div class="sign-up-htm">
+                    <form method="post">
+                        <div class="group">
+                            <label for="user" class="label">Kullanıcı Adı</label>
+                            <input name="UserName" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Email Address</label>
+                            <input name="UserMail" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Şifre</label>
+                            <input id="password" name="UserPassword" type="password" class="input" data-type="password" onkeyup="check()">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Şifre Tekrar</label>
+                            <input id="confirm_password" type="password" class="input" data-type="password" onkeyup="check()">
+                        </div>
+                        <div class="group">
+                            <input disabled id="signup" type="submit" name="submit" class="button" value="Sign Up" formaction="/User/SignUp">
+                        </div>
+                    </form>
+
+                    <div class="hr"></div>
+                    <div class="foot-lnk">
+                        <label for="tab-1">Zaten kayıtlı mısınız?</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

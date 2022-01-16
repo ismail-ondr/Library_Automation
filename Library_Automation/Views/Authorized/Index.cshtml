@@ -1,0 +1,71 @@
+﻿
+@{
+    Layout = null;
+}
+
+@*Admin sayfası*@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/css/AdminLogin.css" rel="stylesheet" />
+    <script src="~/js/PasswordValidation.js"></script>
+</head>
+<body>
+    <div class="login-wrap">
+        <div class="login-html">
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Giriş Yap</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Kayıt Ol</label>
+
+            <div class="login-form">
+                <div class="sign-in-htm">
+                    <form method="post">
+                        <div class="group">
+                            <label for="user" class="label">Eposta</label>
+                            <input name="AuthMail" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Parola</label>
+                            <input name="AuthPassword" type="password" class="input" data-type="password">
+                        </div>
+                        
+                        <div class="group">
+                            <input type="submit" name="submit" class="button" value="Giriş" formaction="/Authorized/SignIn">
+                        </div>
+                    </form>
+
+
+                    
+
+                </div>
+                <div class="sign-up-htm">
+                    <form method="post">
+                        <div class="group">
+                            <label for="user" class="label">Yetkili Adı</label>
+                            <input name="AuthName" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Eposta</label>
+                            <input name="AuthMail" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Parola</label>
+                            <input id="password" name="AuthPassword" type="password" class="input" data-type="password" onkeyup="check()">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label" >Parola Tekrar</label>
+                            <input id="confirm_password" type="password" class="input" data-type="password" onkeyup="check()">
+                        </div>
+                        <div class="group">
+                            <input disabled id="signup" type="submit" name="submit" class="button" value="Kayıt Ol" formaction="/Authorized/SignUp">
+                        </div>
+                    </form>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

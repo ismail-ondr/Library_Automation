@@ -1,0 +1,90 @@
+﻿
+@model IQueryable<Library_Automation.Models.Book>
+
+@{
+    Layout = "~/Views/_UserLayout.cshtml";
+    int rowCounter = 1;
+    
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/css/searchbox.css" rel="stylesheet" />
+</head>
+<body>
+
+    <section class="item content">
+        <div class="container toparea">
+            <div class="underlined-title">
+                <div class="editContent">
+                    <h1 class="text-center latestitems">KİTAPLARIMIZ</h1>
+                </div>
+                <div class="wow-hr type_short">
+                    <span class="wow-hr-h">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </span>
+                </div>
+                <form>
+                    <div class="container" style=" padding-left:300px; ">
+                        <div class="row height d-flex justify-content-center align-items-center">
+                            <div class="col-md-8">
+                                <div class="search">
+                                    <i class="fa fa-search"></i>
+                                    <input name="search" type="text" class="form-control" placeholder="Kitap, Yazar, Yayınevi ara">
+                                    <button type="submit" formaction="/UserInterface/MainPageIndex" class="btn btn-primary">Ara</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                <br />
+            </div>
+            @foreach (var book in Model)
+            {
+                <div class="col-md-3">
+                    <div class="productbox">
+                        <div class="fadeshop">
+                            <div class="captionshop text-center" style="display: none; ">
+                                <h3>@book.BookName</h3>
+                                <br />
+                                <br />
+                                <p>
+                                    <a href="/UserInterface/DetailsPage/@book.BookId" class="learn-more detailslearn"> Detaylar ve Ödünç Alma</a>
+
+                                </p>
+                            </div>
+                            @if (book.BookCoverUrl == null )
+                            {
+                                <span class="maxproduct"><img src="~/css/default_book.png" ></span>
+                            }
+                            else
+                            {
+                                <span class="maxproduct"><img src=@book.BookCoverUrl ></span>
+                            }
+
+                        </div>
+                        <div class="product-details">
+                            <a href="#">
+                                <h1>@book.BookName</h1>
+                            </a>
+                            <span class="price">
+                                <span class="edd_price">@book.BookWriter</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+        </div>
+    </section>
+
+
+</body>
+</html>

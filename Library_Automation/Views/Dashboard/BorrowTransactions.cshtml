@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "BorrowTransactions";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+<head>
+    <script src="~/js/FormValidation.js"></script>
+</head>
+<div class="content-wrapper">
+
+
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Filtreleme İşlemi</h3>
+        </div>
+        @if (ViewBag.errorType == "alreadyBorrowedError")
+        {
+            <script>
+                alert("Bu kitap daha önceden alınmış")
+            </script>
+        }
+        @if(ViewBag.errorType == "idError")
+            {
+                <script>
+                    alert("girilen üye veya kitap id'si yanlış")
+                </script>
+            }
+        <form>
+            <div class="card-body">
+                <div class="form-group">
+
+                    <label for="exampleInputEmail1">Kitap Ara</label>
+                    <input type="text" class="form-control" name="searchBook" placeholder="Kitap, Yazar">
+                    <label for="exampleInputEmail1">Üye Ara</label>
+                    <input type="text" class="form-control" name="searchUser" placeholder="İsim, Eposta">
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary" formaction="/Dashboard/BorrowTransactions">Ara</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body table-responsive p-0" style="height:200px">
+                        <table class="table table-hover-fixed text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Kitap Id</th>
+                                    <th>Kitap Adı</th>
+                                    <th>Yazar</th>
+                                    <th>Yayın Evi</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.foundBooksList != null)
+                                {
+                                    @foreach (var x in ViewBag.foundBooksList)
+                                    {
+                                        <tr>
+                                            <td>@x.BookId</td>
+                                            <td>@x.BookName</td>
+                                            <td>@x.BookWriter</td>
+                                            <td>@x.BookPublisher</td>
+
+
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body table-responsive p-0" style="height:200px">
+                        <table class="table table-hover-fixed text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Üye Id</th>
+                                    <th>Üye Adı</th>
+                                    <th>Üye Eposta</th>
+
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.foundUsersList != null)
+                                {
+                                    @foreach (var x in ViewBag.foundUsersList)
+                                    {
+                                        <tr>
+                                            <td>@x.UserId</td>
+                                            <td>@x.UserName</td>
+                                            <td>@x.UserMail</td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Ödünç Verme İşlemi</h3>
+        </div>
+
+        <form name="form">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Kitap ID</label>
+                    <input type="number" class="form-control" name="bookId" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Üye ID</label>
+                    <input type="number" class="form-control" name="userId" required>
+                </div>
+
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary" formaction="/Dashboard/AddBorrow">Kaydet</button>
+            </div>
+        </form>
+    </div>
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

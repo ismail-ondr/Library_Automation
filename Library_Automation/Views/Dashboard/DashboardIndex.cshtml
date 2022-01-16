@@ -1,0 +1,213 @@
+﻿
+@{
+    ViewData["Title"] = "DashboardIndex";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+
+<html lang="en">
+<head>
+    <script src="~/js/SelectboxSubmit.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json",
+                url: '@Url.Action("VisualizeChart", "Dashboard")',
+                success: function (result) {
+                    google.charts.load('current', {
+                        'packages': ['corechart']
+                    });
+                    google.charts.setOnLoadCallback(function () {
+                        drawChart(result);
+                    });
+                }
+            });
+        });
+
+        function drawChart(result) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Name');
+            data.addColumn('number', 'Stoklar');
+            var dataArray = [];
+
+            $.each(result, function (i, obj) {
+                dataArray.push([obj.date, obj.count]);
+            });
+            data.addRows(dataArray);
+
+            var columnChartOptions = {
+                title: "Kitap - Ödünç Alma Grafiği",
+                width: 600,
+                height: 400,
+                bar: { groupWidth: "20%" },
+            };
+
+            var columnChart = new google.visualization.PieChart(document
+                .getElementById('Piechart_div'));
+
+            columnChart.draw(data, columnChartOptions);
+        }
+    </script>
+
+</head>
+<div class="content-wrapper">
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Admin Paneli</h1>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-lg-3 col-6">
+
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>@ViewBag.bookCount</h3>
+
+                            <p>Kitap Sayısı</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <a href="/Dashboard/BookTransactions" class="small-box-footer">Kitap Ekleme İşlemleri <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>@ViewBag.userCount</h3>
+
+                            <p>Üye Sayısı</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <a href="/Dashboard/MemberTransactions" class="small-box-footer">Üye İşlemleri <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>@ViewBag.borrowedBookCount</h3>
+
+                            <p>Ödünç Alınan Kitap Sayısı</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-cart-plus"></i>
+                        </div>
+                        <a href="/Dashboard/BorrowTransactions" class="small-box-footer">Ödünç Verme İşlemleri<i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>@ViewBag.authCount</h3>
+
+                            <p>Yetkili Sayısı</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <a href="/Dashboard/AuthTransactions" class="small-box-footer">Yetkili İşlemleri <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Ödünç Alma Grafiği</h3>
+                        </div>
+
+
+                        <div id="Piechart_div"></div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Süresi Yaklaşan Kitaplar</h3>
+                        </div>
+                        <br />
+
+                        <div class="col-sm-6">
+
+                            <form name="deneme" formaction="/Dashboard/DashboardIndex">
+                                <div class="form-group" style="width:600px;">
+                                    <select class="form-control" name="selectbox" id="selectId" onchange="onChange()">
+                                        <option value="0">5 Günden az kalan</option>
+                                        <option value="1">10 Günden az kalan</option>
+                                        <option value="2">Süresi geçen</option>
+                                    </select>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="card-body table-responsive p-0" style="height:400px">
+                            <table class="table table-hover-fixed text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Kitap Adı</th>
+                                        <th>Üye Adı</th>
+                                        <th>İade Tarihi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.upcomingBooks != null)
+                                    {
+                                        @foreach (var x in ViewBag.upcomingBooks)
+                                        {
+                                            <tr>
+                                                <td>@x.BookName</td>
+                                                <td>@x.UserName</td>
+                                                <td>@x.ReturnDate.ToString("dd/MM/yyyy")</td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+
+

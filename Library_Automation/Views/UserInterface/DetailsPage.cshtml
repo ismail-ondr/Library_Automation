@@ -1,0 +1,60 @@
+﻿@model Library_Automation.Models.Book
+
+@{
+    ViewData["Title"] = "DetailsPage";
+    Layout = "~/Views/_UserLayout.cshtml";
+}
+
+<section class="item content">
+    <div class="container toparea">
+        
+        <div class="row">
+            <div class="col-md-5">
+                <div class="productbox">
+                    @if (Model.BookCoverUrl == null)
+                    {
+                        <img src="~/css/default_book.png" alt="">
+                    }
+                    else
+                    {
+                        <img src="@Model.BookCoverUrl" alt="">
+                    }
+
+                    <div class="clearfix">
+                    </div>
+                    <br />
+
+                </div>
+            </div>
+            <div class="col-md-5">
+                @if (Model.IsBorrowed == true)
+                {
+                    <input disabled value="Ödünç Al" href="#" class="btn btn-buynow"></input>
+                }
+                @if (Model.IsBorrowed == false)
+                {
+                    <a href="/UserInterface/AddBorrow/?bookId=@Model.BookId&userId=@ViewBag.loggedUserId" class="btn btn-buynow">Ödünç Al</a>
+                }
+
+                <div class="properties-box">
+                    <ul class="unstyle">
+                        <li><b class="propertyname">Kitap Adı:</b> @Model.BookName</li>
+                        <li><b class="propertyname">Kitabın Yazarı:</b> @Model.BookWriter</li>
+                        <li><b class="propertyname">Yayınevi:</b> @Model.BookPublisher</li>
+                        <li><b class="propertyname">Sayfa Sayısı:</b> @Model.BookNumberOfPage</li>
+                        @if (Model.IsBorrowed == false)
+                        {
+                            <li><b class="propertyname">Durum:</b> Kullanılabilir</li>
+                        }
+                        @if (Model.IsBorrowed == true)
+                        {
+                            <li><b class="propertyname">Durum:</b> Ödünç Verilmiş</li>
+                            <li><b class="propertyname">Durum:</b> @Model.ReturnDate.ToString("dd/MM/yyyy") Tarihinde Tekrar Kontrol Edin</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

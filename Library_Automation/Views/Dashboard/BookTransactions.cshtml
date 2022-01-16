@@ -1,0 +1,119 @@
+﻿@model Library_Automation.Models.Book
+@{
+    ViewData["Title"] = "BookTransactions";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+
+<head>
+    <script src="~/js/FormValidation.js"></script>
+</head>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Kitap Ekle</h3>
+                </div>
+                
+                <form name="form">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Kitap Id</label>
+                            <input type="text" class="form-control" name="BookId" value="@Model.BookId" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Kitap Adı</label>
+                            <input type="text" class="form-control" name="BookName" value="@Model.BookName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Kitabın Yazarı</label>
+                            <input type="text" class="form-control" name="BookWriter" value="@Model.BookWriter" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Yayınevi</label>
+                            <input type="text" class="form-control" name="BookPublisher" value="@Model.BookPublisher" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Sayfa Sayısı</label>
+                            <input type="number" class="form-control" name="BookNumberOfPage" value="@Model.BookNumberOfPage">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Kitap Kapağı Url</label>
+                            <input type="text" class="form-control" name="BookCoverUrl" value="@Model.BookCoverUrl">
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" formaction="/Dashboard/AddBook">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Diğer Kitap İşlemleri</h3>
+                </div>
+                <form>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Kitap Ara</label>
+                            <input type="text" class="form-control" name="property" placeholder="Kitap Adı, Yazar, Yayınevi">
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" formaction="/Dashboard/BookTransactions">Ara</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-body table-responsive p-0" style="height:400px">
+                        <table class="table table-hover-fixed text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Kitap Adı</th>
+                                    <th>Yazar</th>
+                                    <th>Yayın Evi</th>
+                                    <th>Sayfa Sayısı</th>
+                                    <th>Sil</th>
+                                    <th>Güncelle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.foundBooksList != null)
+                                {
+                                    @foreach (var x in ViewBag.foundBooksList)
+                                    {
+                                        <tr>
+                                            <td>@x.BookName</td>
+                                            <td>@x.BookWriter</td>
+                                            <td>@x.BookPublisher</td>
+                                            <td>@x.BookNumberOfPage</td>
+                                            <td><a href="/Dashboard/RemoveBook/@x.BookId" class="btn btn-danger">Sil</a></td>
+                                            <td><a href="/Dashboard/UpdateBook/@x.BookId" class="btn btn-warning">Güncelle</a></td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                
+            </div>
+            
+            
+        </div>
+        
+    </div>
+    
+</div>
+    
+
